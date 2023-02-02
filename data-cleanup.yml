@@ -1,0 +1,22 @@
+#Cron Job Run a Containerized Task on a Schedule
+#Our final workload is a data cleanup task. It needs to run to completion once every minute.
+#Create an object called data-cleanup in the default Namespace. 
+#Use the object type that you feel best meets the stated requirements. 
+#Use the busybox:stable image to run the command date once every minute.
+
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: data-cleanup
+spec:
+  schedule: "* * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: busybox
+            image: busybox:stable
+            command:
+            - date
+          restartPolicy: OnFailure
