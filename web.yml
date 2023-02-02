@@ -1,0 +1,24 @@
+#Run a Collection of Pods That Can Be Updated with Zero Downtime
+#We have a web application that needs multiple instances for reliability. These instances need to be able to scale easily, and we #need to be able to roll out code changes with zero downtime. Luckily, the application itself is stateless, which should make this#a bit easier.
+#Create an object called web in the default Namespace to manage this workload. You will need to determine the proper object type
+#to use. Provide 3 replicas of the application. For now, you can just the nginx:stable image.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:stable
+        ports:
+        - containerPort: 80

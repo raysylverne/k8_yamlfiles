@@ -1,0 +1,37 @@
+#Run a Collection of Stateful Pods That Need a Sticky Identity
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: legacy-svc
+spec:
+  ports:
+  - port: 80
+    name: web
+  clusterIP: None
+  selector:
+    app: legacy
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: legacy
+spec:
+  selector:
+    matchLabels:
+      app: legacy
+  serviceName: legacy-svc
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: legacy
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:stable
+        ports:
+        - containerPort: 80
+
