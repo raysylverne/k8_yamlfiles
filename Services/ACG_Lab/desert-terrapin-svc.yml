@@ -1,0 +1,16 @@
+#There is a deployment called desert-terrapin in the default Namespace that needs to be exposed within the
+#cluster network. The relevant Pods listen on port 80 and have the label app=desert-terrapin.
+#Expose the Service on port 80 as well.Create the appropriate Service with the name desert-terrapin-svc
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: desert-terrapin-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: desert-terrapin
+  ports:
+  - name: web
+    port: 80
+    targetPort: 80

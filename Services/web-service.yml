@@ -1,0 +1,14 @@
+#Create a Service that points to the Deployment's Pods using the app label.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-service
+spec:
+  type: ClusterIP
+  selector:
+    app: web-deployment
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
